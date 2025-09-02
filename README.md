@@ -24,10 +24,3 @@ This project helps you log daily health stats such as protein intake, water inta
 
 ---
 
-## 📂 Project Structure
-fitness-tracker-go/
-│── main.go # Go backend server
-│── index.html # Frontend UI
-│── go.mod / go.sum # Go dependencies
-│── .and
-│── README.md # Project documentation
