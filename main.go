@@ -4,9 +4,11 @@ import (
 	"context"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -29,7 +31,17 @@ func CORSMiddleware() gin.HandlerFunc {
 }
 
 func connectMongo() {
-	clientOptions := options.Client().ApplyURI("mongodb+srv://vidishsharma20:fitness1234@cluster1.hxfzg0k.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1")
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("❌ Error loading .env file")
+	}
+
+	mongoURI := os.Getenv("MONGO_URI")
+	if mongoURI == "" {
+		log.Fatal("❌ MONGO_URI not found in .env file")
+	}
+
+	clientOptions := options.Client().ApplyURI(mongoURI)
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
